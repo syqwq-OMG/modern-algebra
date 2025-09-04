@@ -1,5 +1,5 @@
 #import "../template.typ": *
 
-= 群、群作用
+= 群论、群作用
 
 #pagebreak()

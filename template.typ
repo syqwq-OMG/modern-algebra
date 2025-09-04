@@ -3,20 +3,24 @@
 #import "@preview/showybox:2.0.4": showybox
 #import "@preview/zebraw:0.5.5": zebraw
 
+#import "utils.typ": *
+#import emoji: drops, eyes
+
 #let colors = (
   rgb("93B7BE"),
   rgb("FBACBE"),
   rgb("FFBA49"),
-  rgb("2B4162"),
-  rgb("7B0828"),
-  rgb("255C99"),
-  rgb("FFD166"),
+  rgb("33658A"),  // 3 definition
+  rgb("7B0828"),  // 4 problem
+  rgb("255C99"),  // 5 theorem
+  rgb("FFD166"),  // 6 example
+  rgb("A997DF")   // 7 remark
 )
 
 #let cn_font = "Source Han Serif SC"
 #let en_font = "New Computer Modern"
 
-#let note(course: "", author: "syqwq", watermark: "", body) = {
+#let note(course: "", author: "syqwq", watermark: "logo", body) = {
   set text(
     font: (
       en_font,
@@ -25,11 +29,12 @@
     weight: "light",
   )
 
-  set par(first-line-indent: 2em)
-
   show "。": ". "
   show: thmrules
   show: zebraw
+
+  set par(first-line-indent: 2em)
+  set math.mat(delim: "[")
 
   set page(
     numbering: "1",
@@ -64,10 +69,12 @@
 
       align(center)[\- #current-page -]
     },
-    background: rotate(-60deg, text(100pt, fill: rgb("#faf2f1"))[
-      #strong()[#watermark]
-    ]),
+    background: rotate(-40deg, image("src/syqwq-logo.svg", height: 10%)),
   )
+
+  set page(background: rotate(-60deg, text(100pt, fill: rgb("#faf2f1"))[
+    #strong()[#watermark]
+  ])) if watermark != "logo"
 
   set heading(numbering: "1.")
 
@@ -143,7 +150,8 @@
   text(font: "New Computer Modern Sans", weight: "semibold", fill: color)[#t]
 }
 #let thmname(t, color: rgb("#000000")) = {
-  text(font: ("New Computer Modern Sans", "Heiti SC"), fill: color)[#t]
+  // text(font: ("New Computer Modern Sans", "Heiti SC"), fill: color)[#t]
+  text(font: ("New Computer Modern Sans", "SimHei"), fill: color)[#t]
 }
 
 #let thmtext(t, color: rgb("#000000")) = {
@@ -192,7 +200,7 @@
       showybox(
         width: 100%,
         radius: 0.3em,
-        breakable: true,
+        breakable: false,
         padding: (top: 0em, bottom: 0em),
         ..blockargs.named(),
         ..blockargs_individual.named(),
@@ -231,8 +239,10 @@
 #let definition-style = builder-thmline(color: colors.at(3))
 #let definition = definition-style("definition", "Definition")
 #let proposition = definition-style("proposition", "Proposition")
-#let remark = definition-style("remark", "Remark")
 #let observation = definition-style("observation", "Observation")
+
+#let remark-style = builder-thmline(color: colors.at(7))
+#let remark = remark-style("remark", "Remark")
 
 #let theorem-style = builder-thmline(color: colors.at(5))
 #let theorem = theorem-style("theorem", "Theorem")
@@ -244,7 +254,7 @@
 
 #let example-style = builder-thmline(color: colors.at(6))
 // #let example = example-style("example", "Example").with(numbering: none)
-#let example=example-style("example", "Example")
+#let example = example-style("example", "Example")
 
 #let proof(body, name: none) = {
   thmtitle[Proof]
@@ -254,7 +264,7 @@
   thmtitle[.]
   body
   h(1fr)
-  $square.filled$
+  $qed$
 }
 
 #let solution(body, name: none) = {
@@ -264,4 +274,6 @@
   }
   thmtitle[.]
   body
+  h(1fr)
+  $rect.v$
 }

@@ -1,4 +1,5 @@
 #import "template.typ": *
+#import emoji:eyes,drops
 #show: note.with(course: "抽象代数", watermark: none)
 
 #include "chapters/ch1.typ"

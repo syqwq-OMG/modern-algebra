@@ -1,5 +1,5 @@
 #import "../template.typ": *
 
-= 环、模
+= 环论、模论
 
 #pagebreak()
