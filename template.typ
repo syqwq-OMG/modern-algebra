@@ -10,7 +10,7 @@
   rgb("93B7BE"),
   rgb("FBACBE"),
   rgb("FFBA49"),
-  rgb("33658A"),  // 3 definition
+  rgb("#264a66"),  // 3 definition
   rgb("7B0828"),  // 4 problem
   rgb("255C99"),  // 5 theorem
   rgb("FFD166"),  // 6 example
@@ -35,6 +35,7 @@
 
   set par(first-line-indent: 2em)
   set math.mat(delim: "[")
+  set math.cases(gap: 0.5em)
 
   set page(
     numbering: "1",

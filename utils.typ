@@ -45,6 +45,7 @@
 #let symbol-table(r: 2, c: 2) = table.with(
   rows: r,
   columns: c,
+  align: (right+bottom,)+(center+bottom,)*(c - 1),
   stroke: (x, y) => {
     if x == 0 and y == 0 { (right: black + 0.7pt, bottom: black + 0.7pt) } else if x == 0 {
       (right: black + 0.7pt)

@@ -20,6 +20,7 @@
   + *分配律*：
     + $x dot (y+z)=x dot y+x dot z$
     + $(x+y) dot z = x dot z+y dot z$
+  则称 $F$ 是一个*域*。
 ]
 
 #lemma([关于零元])[
@@ -116,12 +117,12 @@
 加了两个无理数，也确实构成一个域. 但是其实，加了这两个无理数和加一个无理数的效果是一样的。
 
 我们来看看 $F'=QQ(sqrt(2)+sqrt(3))$。按照 @poly-f 的思路，
-我们考虑能否找到一个多项式使得 $alpha=sqrt(2)+sqrt(3)$ 是他的根。通过平方，移项，平方，不难得到 $f(alpha)=alpha^(4)
+考虑能否找到一个多项式使得 $alpha=sqrt(2)+sqrt(3)$ 是他的根。通过平方，移项，平方，不难得到 $f(alpha)=alpha^(4)
 -10 alpha^(2) +1=0$，利用 Eisenstein 判别法可以得到 $f$ 是一个不可约多项式，因此我们断言：
 $
   F'=\{ x_1+x_2 alpha + x_3 alpha^(2) +x_4 alpha^(3) mid(|) x_i in QQ \}
 $
-接下来，我们要说明： $F=F'$。
+接下来，要说明： $F=F'$。
 手玩得到：
 $
   cases(
@@ -131,9 +132,9 @@ $
 $
 因此， $sqrt(2), sqrt(3)$ 都可以用 $alpha$ 的多项式表示出来，而他们又可以生成整个 $F$，因此整个 $F$ 都可以用 $F'$ 表示出来。
 或者可以这样考虑 $F="span"(1,sqrt(2),sqrt(3),sqrt(6)), F'="span"(1,alpha,alpha^(2) ,alpha^(3),alpha^(4))$
-，而我们的线性方程组又给出了这两组基之间的基变换，并且可以验证是双射，因此这两组基可以互相线性表出，从而他们张成的空间实际上是同一个空间。
+，而线性方程组又给出了这两组基之间的基变换，并且可以验证是双射，因此这两组基可以互相线性表出，从而他们张成的空间实际上是同一个空间。
 
-我们把这种只加一个元的域扩张叫做*单扩张*，加若干元的扩张叫*有限扩张*。我们后面会看到，其实在一定条件下，有限域扩张就是单扩张。
+我们把这种只加一个元的域扩张叫做*单扩张*，加若干元的扩张叫*有限扩张*。在一定条件下，有限域扩张就是单扩张。
 
 #example([有限域的例子])[
   5. $FF_2=\{ overline(0), overline(1) \}$
@@ -148,7 +149,7 @@ $
     overline(0), overline(1), dots.h.c , overline(p-1) \}$ 是一个域。
 ]
 #proof()[
-  考虑乘法逆。对于 $overline(k) in FF_(p)^\*$，由于 $p in PP$，那么 $k bot p$，根据 Bezout 定理，我们有：
+  考虑乘法逆。对于 $overline(k) in FF_(p)^\*$，由于 $p in PP$，那么 $k bot p$，根据 Bezout 定理，有：
   $exists u,v in ZZ, u k + v p=1$ 两侧取模可得 $overline(u)$ 就是 $overline(k)$ 的乘法逆。
 
   *另解*。构造一个映射 $T:FF_(p)->FF_(p) , y |-> k y$，接下来，我们证明： $ker T=\{ 0 \}$。如果 $T(y)=0 <=>
@@ -159,7 +160,7 @@ $
 ]
 
 #remark()[
-  若 $p in.not PP, m in NN, m>=2, ZZ_(m) = lr({ overline(0), overline(1), dots.h.c, overline(m-1) })$，则乘法逆不一定存在。比如 $m=4, 2 dot 2=0$，而 $overline(2)!=overline(0)$，此时我们称 $2$ 为零因子。
+  若 $p in.not PP, m in NN, m>=2, ZZ_(m) = lr({ overline(0), overline(1), dots.h.c, overline(m-1) })$，则乘法逆不一定存在。比如 $m=4, 2 dot 2=0$，而 $overline(2)!=overline(0)$，此时称 $2$ 为零因子。
 ]
 
 #example([函数域])[
@@ -224,7 +225,7 @@ $
     columns: 5,
     h(1fr),
     align: horizon,
-    symbol-table(r: 5, c: 5)(align: bottom,
+    symbol-table(r: 5, c: 5)(
       [$+$], [$0$], [$1$], a,aa,
     [$0$], [$0$], [$1$], a,aa,
     [$1$], [$1$], [$0$],aa,a,
@@ -232,7 +233,7 @@ $
     aa,aa,a,[$1$],[$0$]
     ),
     h(1fr),
-    symbol-table(r: 5, c: 5)(align: bottom,
+    symbol-table(r: 5, c: 5)(
       [$dot$], [$0$], [$1$], a,aa,
     [$0$], [$0$], [$0$], [$0$],[$0$],
     [$1$], [$0$], [$1$],a,aa,
@@ -283,8 +284,8 @@ $
   $
   若 $x!=0$，则存在 $x^(-1)$，于是
   $
-    "LHS" & =phi(x)dot phi(x^(-1))=1 \
-    "RHS" & =0 dot phi(x^(-1))=0
+    "LHS" & =>phi(x)dot phi(x^(-1))=1 \
+    "RHS" & =>0 dot phi(x^(-1))=0
   $
   而 $0!=1$，因此 $forall x_1!=x_2, phi(x_1)!=phi(x_2)$.
 ]
@@ -300,8 +301,10 @@ $
 ]
 
 #remark()[
-  若存在 $phi:F_1 -> F_2$，则 $F_2$ 可以称为 $F_1$ 的子域。
+  若存在同态 $phi:F_1 -> F_2$，则 $F_1$ 可以称为 $F_2$ 的子域。
 ]
+
+同态一定是*单射*。
 
 #let phiff = eval(mode: "math", "phi:F_1 -> F_2")
 
@@ -378,33 +381,131 @@ $
 ]
 
 #remark([$E$-代数])[
-  111
+  若 $F \/ E$ 是有限扩张，且 $n=[F:E]$ ，则可以取 $F$ 的一组基 $e_1, e_2,dots.h.c, e_n$，不妨设 $e_1=1$，则有
+  $
+  e_i dot e_j = sum_(k=1)^(n) c_(i j) ^(k) e_k quad c_(i j) ^(k)  in E
+  $    
+  因此， $forall x=sum_(i=1)^(n) x_i e_i, y=sum_(j=1)^(n) y_i e_j$，我们有
+  $
+  x y=sum_(k=1)^(n) lr(( sum_(i=1)^(n) sum_(j=1)^(n) c_(i j) ^(k) )) e_k
+  $  
+  此时，称 $F$ 为一个 *$E$-代数*。
+]
+#example()[
+  + $CC=span_(RR) (1,i)$
 ]
 
 == 域的特征 (characteristic)
 #definition([域的特征])[
   $F$ 是域。定义映射 $N:NN -> F, n |->n_(F)$，即
   $
+  
   cases(
     N(0_(NN) )&=0_(F),
-    N(n+1) &=N(n)+1_(F) 
+    N(n+1) &=N(n)+1_(F),
   )
   $  
   若 $N$ 为单射，则称 $F$ 的特征为0，记作 $char F=0$.\
   若 $N$ 不是单射，则存在一个最小的 $p in NN^\*$ s.t. $N(p)=0$，此时 $char F=p$.   
 ]
 
+#remark()[
+  对于上述的 $N:NN -> F$，可以证明他满足：
+  + $N(n+m)=N(n)+N(m)$
+  + $N(n dot m)=N(n) dot N(m)$
+  + $N(n-m)=N(n)-N(m)$ 
+]
+#proof()[
+  先考虑第1条性质， $NN$ 上定义的加法是 $+:NN  times  NN  -> NN, (x,y) -> x+y$，即
+  $
+  cases(n+0 eq^(triangle.stroked.small) n,
+  n+(m+1) eq^(triangle.stroked.small) (n+m)+1)
+  $  
+  我们把 $N(n+m)=N(n)+N(m)$ 看成是关于 $m$ 的命题 $P(m)$，利用数学归纳法：
+  + $P(0): N(n)=N(n)+N(0)=N(n)$
+  + $P(n+(m+1)): N(n+(m+1))=N(n+m)+N(1)$, \ 
+    $"LHS"=N((n+m)+1)=N(n+m)+1_(F)=N(n)+N(m)+1_(F)  $ \
+    $"RHS"=N(n)+N(m)+1_(F) $ 
+  因此对于加法是对的。
 
+  考虑 $NN$ 上的乘法 $dot : NN  times NN -> NN, (x, y) -> x dot y$，即
+  $
+  cases(
+    n dot 0 eq^(triangle.stroked.small) 0,
+    n dot (m+1) eq^(triangle.stroked.small) n dot m + n
+  )
+  $   
+  同理利用数学归纳，证明略。
+]
 
+#proposition([有限域的特征为素数])[
+  若 $char F=p!=0$，则 $p in PP$. 
+]
+#proof[
+  反证法。 若 $p=q dot r, 1<q,r<p$，则 $N(p)=N(q dot r)=N(q) dot N(r)$，由于 $N(p)=0$，则 $N(q)=0 or N(r)=0$，与 $p$ 是特征的定义矛盾。 因此 $p in PP$。   
+]
 
+#proposition()[
+  + 若 $char F=0$ ，则 $F\/QQ$.
+  + 若 $char F=p>0$ ，则 $F\/FF_(p) $.  
+]
+#proof[
+  注意：$F\/E =>$ 存在同态 $phi:E  ->  F$. 
+  + 考虑构造映射 $N:NN -> F, n|->n_(F)$，不难发现是单射，于是 $NN subset.eq F => ZZ subset.eq F => QQ subset.eq F <=> F\/QQ$.
+  + 考虑构造映射 $N:FF_(p) -> F, n|->n_(F)$，发现他是同态，因此 $F\/FF_(p) $. 
+]
 
+#proposition()[
+  若 $phi:E  ->  F$ 是域同态，则 $char E=char F$.  
+]
+#proof[
+  若 $char  E=0$，则 $E\/QQ => F\/QQ => char F=0$. 若 $char E=p in PP$，  注意到 $phi(n dot 1_(E) )=n dot 1_(F), n in NN $ ，不难得到 $phi(p_(E))=phi(0_(E) )=0_(F)$，因此 $char F divides p$，又因为 $p in PP$ 得到 $char F=p=char E$. 
+]
 
+#definition([Frobenius 自同构])[
+  若 $F$ 是域，且 $char F=p >0$，则映射 $sigma:F  ->  F, x|->x^(p) $ 是一个自同构，称他为 *Frobenius 自同构*.
+]
+#proof[
+  首先， $p in PP$，考虑二项式定理：
+  $
+  (x+y)^(p) = x^(p) + binom(p,1)x^(p-1) y+ binom(p,2) x^(p-2) y +dots.h.c +y^(p) 
+  $
+  事实上， $p in PP$ 时， $p divides binom(p,k)=p^(underline(k)) \/ k!$，这是因为 $1,2,dots.h.c,k < p$，从而不能整除 $p$ ，而组合数是一个整数，因此分子上的因子 $p$ 被留了下来。所以 $binom(p,k)=0_(F) $，进而得到 $(x+y)^(p) =x^(p) +y^(p) $，容易验证 $sigma$ 满足其余的自同构要求。   
+]
 
+#example([Frobenius 自同构 的例子])[
+  #let a=[$alpha$]
+  #let aa=[$alpha^(2)$]
+  考虑 $FF_4, char FF_4=2$ 上的 Frobenius 自同构 $sigma:FF_4  ->  FF_4, x |-> x^(2) $ 
+  #grid(
+    columns: 5,
+    h(1fr),
+    align: horizon,
+    symbol-table(r: 5, c: 5)(
+      [$dot$], [$0$], [$1$], a,aa,
+    [$0$], [$0$], [$0$], [$0$],[$0$],
+    [$1$], [$0$], [$1$],a,aa,
+    a,[$0$],a,aa,[$1$],
+    aa,[$0$],aa,[$1$],a
+    ),
+    h(1fr),
+    symbol-table(r: 2, c: 5)(
+      [$x$], [$0$], [$1$], a,aa,
+    [$sigma(x)$], [$0$], [$1$], aa,a
+    ),h(1fr))
+    $sigma$ 的不动域为 $FF_2$. 
+]
 
+== 域的扩张
+#definition([有限生成扩张])[
+  设 $F\/E$ 是一个域扩张。对于 $F$ 的子集 $S$ ，定义 $E(S)$ 为 $F$ 中包含 $E union  S$ 的最小子域，称为由 $S$ 在 $E$ 上生成的遇到。 若 $S$ 是有限的，且 $E(S)=F$，则称 $F$ 是 $E$ 上的*有限生成扩张*。    
+]
 
-
-
-
+#example()[
+  + $F=QQ(sqrt(2)), dim_(QQ)F =2$ 
+  + $F=QQ(sqrt(2),sqrt(3)), dim_(QQ) F=4$ 
+  + $F=RR(x)$ 是实系数有理函数域，是有限生成但不是有限。 $dim_(RR)F=oo $.  
+]
 
 
 
