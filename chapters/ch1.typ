@@ -200,7 +200,7 @@ $
   $p in PP, d in ZZ_(+)$，记 $q=p^(d)$，则存在一个 $q$ 元有限域 $FF_(q)$.
 ]
 #proof()[
-  还不会证明 #(eyes + drops + drops + drops)
+  取 $FF_(p)$ 上的一个 $d$ 次不可约多项式 $f(x)$，构造商环 $K=FF_(p)[x]\/lr(angle.l f(x) angle.r)$ 可以看成是 $f(alpha)=0$ ，从而得到一个域 $FF_(p)$ 上的 $d$ 维线性空间，一组基为 $1,x,x^(2) ,dots.h.c,x^(d-1) $。因此 $K$ 一共有 $p^(d) $ 个元素。接下来考虑乘法逆是否存在。 $forall g(x) in K, deg g<d$ 且 $f$ 是不可约多项式，因此 $(f,g)=1$，从而由 Bezout 定理， $exists u,v in K$ s.t. $u f+ v g=1$，模掉 $f$，得到 $g$ 的逆元为 $v$. 因此 $K$ 就是所要求的 $FF_(q) $.       
 ]
 
 #example([四元数])[

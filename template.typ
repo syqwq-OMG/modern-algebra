@@ -10,11 +10,11 @@
   rgb("93B7BE"),
   rgb("FBACBE"),
   rgb("FFBA49"),
-  rgb("#264a66"),  // 3 definition
-  rgb("7B0828"),  // 4 problem
-  rgb("255C99"),  // 5 theorem
-  rgb("FFD166"),  // 6 example
-  rgb("A997DF")   // 7 remark
+  rgb("#264a66"), // 3 definition
+  rgb("7B0828"), // 4 problem
+  rgb("255C99"), // 5 theorem
+  rgb("FFD166"), // 6 example
+  rgb("A997DF"), // 7 remark
 )
 
 #let cn_font = "Source Han Serif SC"
@@ -146,6 +146,8 @@
 
   body
 }
+
+#let qwq = eyes + drops + drops + drops
 
 #let thmtitle(t, color: rgb("#000000")) = {
   text(font: "New Computer Modern Sans", weight: "semibold", fill: color)[#t]
