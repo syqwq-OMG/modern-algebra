@@ -296,7 +296,7 @@ $
   + $1_(F) in E$
   + $forall x,y in E , x+y in E, x y in E$
   + $forall x in E, -x in E$
-  + $x in E without lr({ 0 }), x^(-1)in E$
+  + $forall x in E without lr({ 0 }), x^(-1)in E$
   则称 $E$ 为 $F$ 的*子域*， $F$ 为 $E$ 的一个*扩域*。 记作 $F \/ E$.
 ]
 
