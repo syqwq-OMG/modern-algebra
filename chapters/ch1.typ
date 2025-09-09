@@ -1,4 +1,5 @@
 #import "../template.typ": *
+#import "@preview/commute:0.3.0": node, arr, commutative-diagram
 
 = 域论、线性空间
 == 定义和例子
@@ -497,29 +498,201 @@ $
 ]
 
 == 域的扩张
-#definition([有限生成扩张])[
-  设 $F\/E$ 是一个域扩张。对于 $F$ 的子集 $S$ ，定义 $E(S)$ 为 $F$ 中包含 $E union  S$ 的最小子域，称为由 $S$ 在 $E$ 上生成的遇到。 若 $S$ 是有限的，且 $E(S)=F$，则称 $F$ 是 $E$ 上的*有限生成扩张*。    
+#definition([有限扩张])[
+  若 $E\/F$，且 $[E:F]<oo$，则称 $E$ 为 $F$ 的*有限扩张*。
 ]
+
+#definition([有限生成扩张 与 无限生成扩张])[
+  设 $E\/F$ 是一个域扩张。对于 $E$ 的子集 $S$ ，定义 $F(S)$ 为 $E$ 中包含 $F union  S$ 的最小子域，称为由 $S$ 在 $F$ 上生成的子域。 
+  - 若 $S$ 是有限的，且 $F(S)=E$，则称 $E$ 是 $F$ 上的*有限生成扩张*。
+  - 若对于 $E$ 的任何有限子集 $S$，都有 $F(S) != E$，则称 $E$ 是 $F$ 上的*无限生成扩张*。    
+]
+
+注意：有限扩张是从维数的观点，有限生成扩张是从构造的观点。
 
 #example()[
   + $F=QQ(sqrt(2)), dim_(QQ)F =2$ 
   + $F=QQ(sqrt(2),sqrt(3)), dim_(QQ) F=4$ 
   + $F=RR(x)$ 是实系数有理函数域，是有限生成但不是有限。 $dim_(RR)F=oo $.  
+  + $E=QQ(sqrt(p) mid(|) p in PP)$ 是无限生成。 
+]
+#let qq-pow-2-example = eval(mode: "math", "QQ(2^(frac(1, 2^(k) )) mid(|) k=1,2,dots.h.c )")
+#example()[
+  1. $E=QQ(2^(frac(1, 2^(k) )) mid(|) k=1,2,dots.h.c ), F=QQ$ 是无限生成。 
+]
+#proof[
+  设 $E_0=F, E_1=QQ(2^(frac(1, 2)) ), E_1=QQ(2^(frac(1, 2)), 2^(frac(1, 4))  )=QQ(2^(frac(1, 4)) ),dots.h.c$ 以此类推，于是有 $F =E_0 subset.eq E_1 subset.eq E_2 subset.eq dots.h.c E$，且 $E=union.big_(k=1)^(oo) E_k  $，对于 $E$ 的任意一个有限子集 $S=lr({ alpha_1, alpha_2, dots.h.c , alpha_n }) => exists N$ s.t. $alpha_1, alpha_2, dots.h.c , alpha_n in E_(N) $，则 $F union S subset.eq E_(N) => F(S) subset.eq E_(N) != E  $.    
 ]
 
+#theorem([有限扩张 $=>$ 有限生成扩张])[
+  有限扩张一定是有限生成扩张，但反之未必。
+]
+#proof[
+  设 $E\/F$ 是有限扩张， $[E:F]=n => E=span_(F)(e_1, e_2, dots.h.c , e_n) => E=F(e_1, e_2, dots.h.c , e_n), e_1, e_2, dots.h.c , e_n in E$ 是有限生成扩张。
 
+  有限生成扩张不是有限扩张的反例： $QQ(pi), QQ(x)$. 注意：$pi$ 是超越数，即 $p(pi)!=0, p in QQ[x],p!=0$. 
+]
 
+#definition([代数扩张、超越扩张])[
+  $E\/F$，若 $u in E$ 满足 $f(u)=0$，其中 $f in F[x], f!=0$，则称 $u$ 在 $F$ 上代数，称 $u$ 为 $F$ 上的*代数元*；否则称 $u$ 是*超越元*。\
+  - 若 $forall  u in E$， $u$ 总是 $F$ 上的代数元，则称 $E$ 是 $F$ 上的*代数扩张*。\
+  - 若 $exists u in E$ s.t. $u$ 不是任何 $f in F[x], f!=0$ 的根，则称 $E$ 是 $F$ 上的*超越扩张*。 
+]
 
+#example([代数扩张与超越扩张的例子])[
+  + $QQ(sqrt(2))$ 是 $QQ$ 上的代数扩张。
+  + $QQ(pi)$ 是 $QQ$ 上的超越扩张。
+  + $QQ(x)$ 是 $QQ$ 上的超越扩张。
+]
 
+#lemma([代数元的逆])[
+  若 $alpha$ 是 $F$ 上的代数元，则 $-alpha, alpha^(-1)$ 也是 $F$ 上的代数元。 
+]
+#proof[
+  设 $deg f=n$，对于加法逆，考虑替换为 $f(-x)$，对于乘法逆，考虑替换为 $x^(n) f(frac(1, x))$ 即可。
+]
 
+#lemma([代数元的和与积])[
+  $E\/F$，若 $alpha, beta$ 是 $F$ 上的代数元，则 $alpha+beta, alpha beta$ 也是 $F$ 上的代数元。 
+]
+#proof[
+  设 $f(alpha)=0, g(beta)=0, f,g in F[x], deg f=n, deg g=m$.
+  记 $R_(x)(A[x], B[x]) $ 为多项式 $A,B$ 关于 $x$ 的结式，也就是 $R_(x)(A[x], B[x])=0 <=>$ $A,B$ 有公共根。
 
+  定义 $h(y)=R_(x)(f(x), g(y-x)) in F[y]$，我们断言 $h(alpha+beta)=0$，因为 $f(x), g(alpha+beta-x)$ 有公共根 $x=alpha$. 同理，定义 $g(y)=R_(x)(f(x),x^(m) g(frac(y, x))) $，可证 $alpha beta$ 为代数元。     
+]
 
+#theorem([有限扩张 $=>$ 代数扩张])[
+  有限扩张一定是代数扩张，但反之未必.
+]
+#proof[
+  设 $[E:F]=n$，则 $forall u in E$，要找 $f in F[x], f!=0$ s.t. $f(u)=0$.
+  考虑 $1,u,u^(2) ,dots.h.c , u^(n) in E$，由于 $dim_(F)E=n$，因此他们线性相关，即 $exists a_0, a_1, dots.h.c , a_n in F$ 不全为0 s.t. $a_0+a_1 u +dots.h.c +a_n u^(n) =0$，取 $f(x)=a_0+a_1 x +dots.h.c +a_n x^(n)$ 即可。 
 
+  反例：#qq-pow-2-example. 
+]
 
+#remark()[
+  - 代数扩张 $arrow.double.not$ 有限生成扩张。 反例： #qq-pow-2-example
+  - 有限生成扩张 $arrow.double.not$ 代数扩张。 反例： $QQ(pi), QQ(x)$.
+]
 
+#definition([中间域])[
+  设 $E\/F$ 是一个域扩张，若 $E$ 的子域 $K$ 满足 $F subset.eq  K$，则称 $K$ 为扩张 $E\/F$ 的一个*中间域*。 
+]
 
+#example([中间域的例子])[
+  + $QQ subset.eq QQ(sqrt(2)) subset.eq QQ(sqrt(2), sqrt(3))$
+  #align(center)[
+    #commutative-diagram(
+      node((0,2),$QQ(sqrt(2),sqrt(3))$ ),
+      node((1,1),$QQ(sqrt(2))$ ),
+      node((1,2),$QQ(sqrt(3))$ ),
+      node((1,3),$QQ(sqrt(6))$ ),
+      node((2,2),$QQ$ ),
+      arr((2,2),(1,1),""),
+      arr((2,2),(1,2),""),
+      arr((2,2),(1,3),""),
+      arr((1,1),(0,2),""),
+      arr((1,2),(0,2),""),
+      arr((1,3),(0,2),""),
+    )
+  ]
+  2. $FF_(2) subset.eq FF_(4) subset.eq FF_(4)(x)$
+]
 
+#lemma([维度公式])[
+  设 $E\/F$ 是域扩张， $K$ 是一个中间域，则 $[E:F]=[E:K] dot [K:F]$.
+]<field-dim-formular>
+#proof[
+  $F subset.eq K subset.eq E$，首先证明： $E\/K, K \/ F$ 都是有限扩张。
 
+  先证明： $[E:F]<oo$。由于 $[E:F]<oo$， $E$ 可以看成是 $F$ 上的有限维线性空间，且 $dim_(F)E=n$，由于 $K subset.eq E$ 且 $K$ 本身也是 $F$ 上的线性空间，则 $dim_(F)E <= dim_(F)E <oo  $.
+
+  接着，证明： $[E:K]<oo$，把 $E$ 看成是 $F$ 上的线性空间，则取 $E$ 的一组基 $B=lr({ e_1, e_2, dots.h.c , e_n })$，于是 $forall gamma in E$,
+  $
+  gamma=sum_(i=1)^(n) c_i e_i, c_i in F subset.eq K
+  $          
+  把 $E$ 看成是 $K$ 上的线性空间 $F subset.eq K, c_i in K$ ，说明 $B$ 也张成了 $K$ 上的线性空间 $E$，因此 $dim_(K)E <= n <oo$.
+
+  设 $u_1, u_2, dots.h.c , u_n$ 是 $K\/F$ 的基， $v_1, v_2, dots.h.c , v_m$ 是 $E\/K$ 的基，下面构造 $E\/F$ 的基。 
+
+  $forall  beta in E, exists alpha_1, alpha_2, dots.h.c , alpha_m in K$ s.t. 
+  $
+   beta=alpha_1 v_1+alpha_2 v_2+ dots.h.c +alpha_m v_m
+    $
+  
+
+  又 $forall alpha_i, exists a_(i 1), a_(i 2), dots.h.c , a_(i n) in F $ s.t.   
+  $
+  alpha_i=a_(i 1) u_1 +a_(i 2) u_2 +dots.h.c +a_(i n) u_n
+  $ 
+  因此，我们有
+  $
+  beta=sum_(i=1)^(m) ( sum_(j=1)^(n) a_(i j) u_j ) v_i = sum_(i=1)^(m) sum_(j=1)^(n) a_(i j) (u_j v_i)
+  $ 
+  于是，我们得到 $E subset.eq span_(F)lr(( u_j v_i mid(|)_(j=1,2,dots.h.c,n)^(i=1,2,dots.h.c,m))) $，下证 $u_j v_i$ 是线性无关的。
+
+  设 $ sum_(i,j) c_(i j) (u_j v_i) =sum_(i)lr(( sum_(j) c_(i j) u_j   ) v_i)  = 0 $ 
+  由于 $v_1, v_2, dots.h.c v_m$ 线性无关，得到 $forall i, sum_(j=1)^(n) c_(i j)u_j=0$。由于 $u_1, u_2, dots.h.c , u_n$ 线性无关，得到 $forall i,j, c_(i j)=0$.
+
+  从而得到， $[E:F]=n dot m = [E:K] dot [K:F]$. 
+]
+#corollary()[
+  若 $[E:F]=p in PP$，则 $E\/F$ 没有非平凡的中间域。 
+]
+
+#lemma([单代数扩张 $=>$ 有限扩张 ])[
+  单代数扩张都是有限扩张，且扩张的次数就是单代数元作为生成元的极小多项式的次数。
+]
+#proof[
+  设 $E=F(u)$， $u$ 是 $F$ 上的代数元。下证 $[E:F]<oo$.
+  
+  设 $f(x) in F[x], f!=0$ s.t. $f(u)=0$ 且 $f$ 是满足该条件的次数最小的首一多项式。我们称 $f$ 为 $u$ 的*极小多项式*。有如下事实：
+  + $f$ 是唯一的。\
+    若 $f_1,f_2$，都是极小多项式，则 $deg f_1=deg f_2$，则 $f_1-f_2$ 次数更低，且 $f(u)=0 => f=0$，矛盾。     
+  + $f$ 是不可约的。\
+    若 $f=g h, deg f=n$，且 $1<= deg g,deg h <=n-1$，于是 $f(u)=0 => g(u)=0 or h(u)=0$，矛盾。
+  
+  若 $f$ 是 $F[x]$ 中的不可约多项式， 且 $deg g=n$，则 $span_(F)(1,u,dots.h.c,u^(n-1) ) =F(u)=E$ 一定是一个域，且 $[E:F]=n$. 证明可以参考 @poly-f.
+]
+
+#theorem([有限扩张的塔性质])[
+  设 $E\/K, K\/F$ 是有限扩张，则 $E\/F$ 是有限扩张.  
+]<finite-extension-transitivity>
+#proof[
+  设 $[E:K]=m <oo, [K:F]=n<oo$，则由 @field-dim-formular $ [E:F]=[E:K] dot [K:F]=m dot n <oo $
+  得证.
+]
+
+#theorem([有限生成扩张的塔性质])[
+  设 $E\/K, K\/F$ 是有限生成扩张，则 $E\/F$ 是有限生成扩张.  
+]
+#proof[
+  设 $S,T$ 都是有限的，且 $E=K(S), K=F(T)$，则 $E=F(T)(S)=F(T union S)$，而 $T union S$ 也是有限的，因此 $E\/F$ 是有限生成扩张。 
+]
+
+#theorem([有限生成的代数扩张 $<=>$ 有限扩张])[
+  有限生成的代数扩张一定是有限扩张。具体来说，以下等价：
+  #set enum(numbering:"(1)")
+  + $E \/ F$ 是有限扩张 
+  + $E=F(u_1, u_2, dots.h.c , u_n)$，其中 $u_1, u_2, dots.h.c , u_n$ 都是 $F$ 上的代数元，此时 $E\/F$ 是代数扩张。  
+]
+#proof[
+  (1)$=>$(2) 比较简单。设 $[E:F]=n$， $u_1, u_2, dots.h.c , u_n in E$ 是 $E \/ F$ 的基，则 $E=F(u_1, u_2, dots.h.c , u_n)$，因为 $E\/F$ 代数，所以 $u_i$ 在 $F$ 上代数。  
+  
+  (2)$=>$(1) 设 $u_1, u_2, dots.h.c , u_n$ 为代数元，证明： $E=F(u_1, u_2, dots.h.c , u_n) \/ F$ 是有限扩张。考虑从 $F$ 开始，每一次加入 $u_i$，由于每一次都是单代数扩张，因此每一次都相当于一次有限扩张，由 @finite-extension-transitivity 结果仍然是有限扩张，因此 $E\/F$ 是有限扩张。 
+]
+
+#theorem([代数扩张的塔性质])[
+  设 $E\/K, K\/F$ 是代数扩张，则 $E\/F$ 是代数扩张。\
+]
+#proof[
+  设 $alpha in E, exists f in K[x], f!=0$，且 $f(alpha)=0$. 设 $f(x)=x^(n)+a_1 x^(n-1)+dots.h.c +a_n, a_i in K$。
+  设 $K'=F(a_1,a_2,dots.h.c,a_n)$，注意到 $a_1,a_2,dots.h.c,a_n$ 在 $F$ 上代数，则 $[K':F]<oo$.
+
+  注意 $K'(alpha)\/K'$ 是一个单代数扩张，则 $[K'(alpha):K']<oo$. 由 @finite-extension-transitivity 可知 $[K'(alpha):F]=[K'(alpha):K']dot[K':F]<oo$（其实到这里已经足够了）. 因为 $F subset.eq K'$，所以 $F(alpha) subset.eq K'(alpha) => [F(alpha):F]<oo$，因此 $F(alpha)\/F$ 是代数扩张，即 $alpha$ 是 $F$ 上的代数元。    
+]
 
 
 
