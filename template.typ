@@ -7,7 +7,8 @@
 #import emoji: drops, eyes
 
 #let colors = (
-  rgb("93B7BE"),
+  // rgb("93B7BE"),
+  rgb("#b6710a"),
   rgb("FBACBE"),
   rgb("FFBA49"),
   rgb("#264a66"), // 3 definition
@@ -32,6 +33,16 @@
   show "。": ". "
   show: thmrules
   show: zebraw
+  // 数学环境下的中文字体
+  //   show math.equation: set text(font: (
+  //   (name: "New Computer Modern Math", covers: "latin-in-cjk"), // 西文
+  //   cn_font, // 中文
+  //   "New Computer Modern Math", // 数学
+  // ))
+  show math.equation: it => {
+    show regex("\p{script=Han}"): set text(font: cn_font, weight: "light")
+    it
+  }
 
   set par(first-line-indent: 2em)
   set math.mat(delim: "[")
@@ -105,7 +116,7 @@
   let cover = {
     let fill-color = rgb("#D8CFC6")
 
-    set page(footer: none, background: image("src/bg-6.svg", width: 101%, fit: "cover"))
+    set page(footer: none, background: image("src/bg-5.svg", width: 101%, fit: "cover"))
 
     set text(fill: white)
     set par(first-line-indent: 0pt)
@@ -153,8 +164,8 @@
   text(font: "New Computer Modern Sans", weight: "semibold", fill: color)[#t]
 }
 #let thmname(t, color: rgb("#000000")) = {
-  // text(font: ("New Computer Modern Sans", "Heiti SC"), fill: color)[#t]
-  text(font: ("New Computer Modern Sans", "SimHei"), fill: color)[#t]
+  text(font: ("New Computer Modern Sans", "Heiti SC"), fill: color)[#t]
+  // text(font: ("New Computer Modern Sans", "SimHei"), fill: color)[#t]
 }
 
 #let thmtext(t, color: rgb("#000000")) = {
@@ -258,6 +269,12 @@
 #let example-style = builder-thmline(color: colors.at(6))
 // #let example = example-style("example", "Example").with(numbering: none)
 #let example = example-style("example", "Example")
+
+#let gemini-style = builder-thmline(color: colors.at(0))
+#let gemini = gemini-style(
+  "gemini",
+  [#box(image("src/gemini.svg"), height: 1em, baseline: 0.1em) What Gemini says],
+).with(numbering: none)
 
 #let proof(body, name: none) = {
   thmtitle[Proof]

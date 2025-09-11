@@ -25,6 +25,9 @@
 #let sign = math.op("sign")
 #let const = math.op("const")
 #let char = math.op("char")
+#let Gal = math.op("Gal")
+#let Aut = math.op("Aut")
+#let Inv = math.op("Inv")
 
 
 #let oint = math.integral.cont
